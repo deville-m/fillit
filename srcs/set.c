@@ -6,13 +6,13 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 16:09:10 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 16:12:54 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/17 23:00:55 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int			canplace(t_pos **tab, t_pos pos, char **map, int max)
+static int			canplace(t_pos **tab, t_pos pos, char **map, int max)
 {
 	int i;
 	int xtmp;
@@ -25,44 +25,47 @@ int			canplace(t_pos **tab, t_pos pos, char **map, int max)
 		ytmp = tab[i]->y + pos.y;
 		if (xtmp >= max || xtmp < 0
 			|| ytmp >= max || ytmp < 0
-			|| map[xtmp][ytmp] == '#')
+			|| map[xtmp][ytmp] != '.')
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-void		place(t_pos **tab, t_pos pos, char letter, char **map)
+static void		place(t_pos **tab, t_pos pos, char letter, char **map)
 {
 	int i;
 
 	i = 0;
 	while (tab[i])
 	{
-		map[tab[i]->x][tab[i]->y] = letter;
+		map[tab[i]->x + pos.x][tab[i]->y + pos.y] = letter;
 		i++;
 	}
 }
 
-int			setmap(t_list *elem, char **map, int max)
+int			setmap(t_tetro *elem, char **map, int max)
 {
 	int i;
 	int j;
-	int k;
+	t_pos curr;
 
 	i = 0;
 	while (i < max)
 	{
 		j = 0;
-		while (i < max)
+		while (j < max)
 		{
-			if (canplace(tab, pos, map, max))
+			curr.x = i;
+			curr.y = j;
+			if (canplace(elem->postab, curr, map, max))
 			{
-				t_pos curr = {i, j};
-				place(elem->tabpos, curr, elem->letter, map);
+				place(elem->postab, curr, elem->letter, map);
 				return (1);
 			}
+			j++;
 		}
+		i++;
 	}
-	return (0)
+	return (0);
 }

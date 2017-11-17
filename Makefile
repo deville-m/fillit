@@ -1,13 +1,13 @@
 NAME=fillit
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra
 LIBDIR=libft
 LIB=libft.a
 LDLIB=-lft
 LDFLAGS=-L$(LIBDIR)
 SRCDIR=srcs
 INCLUDES=-I$(LIBDIR) -Iincludes
-SRC=$(addprefix $(SRCDIR)/, main.c input.c list.c tetronew.c num_piece.c)
+SRC=$(addprefix $(SRCDIR)/, main.c input.c output.c list.c tetronew.c num_piece.c map.c solver.c set.c)
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)

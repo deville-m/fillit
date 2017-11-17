@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 13:59:59 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 20:30:12 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/17 22:07:44 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ void	print_list(t_tetro *elem)
 		print_link(elem);
 		elem = elem->next;
 	}
+}
+
+int		tetronb(t_tetro *alst)
+{
+	int i;
+
+	if (!alst)
+		return (0);
+	i = 0;
+	while (alst)
+	{
+		i++;
+		alst = alst->next;
+	}
+	return (i);
 }
 
 void	tetrodel(t_tetro **alst)

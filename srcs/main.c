@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:34:19 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 20:35:07 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/17 22:16:10 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 int				main(int argc, char **argv)
 {
 	int		fd;
-	/*char	**map;*/
+	char	**map;
 	t_tetro	*list_input;
 
 	if (argc != 2)
@@ -42,8 +42,9 @@ int				main(int argc, char **argv)
 		ft_putstr("File format not respected.\n");
 		return (-1);
 	}
+	map = solver_init(list_input);
+	/*print_map(map);
 	print_list(list_input);
-	/*map = solve(list_input);
-	print_map(map);
-	free(map);*/
+	free_map(map);*/
+	return (1);
 }
