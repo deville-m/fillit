@@ -1,6 +1,6 @@
 NAME=fillit
 CC=gcc
-CFLAGS=-Wall -Wextra
+CFLAGS=-Wall -Wextra -fsanitize=address
 LIBDIR=libft
 LIB=libft.a
 LDLIB=-lft
@@ -10,27 +10,26 @@ INCLUDES=-I$(LIBDIR) -Iincludes
 SRC=$(addprefix $(SRCDIR)/, main.c input.c output.c list.c tetronew.c num_piece.c map.c solver.c set.c)
 OBJ=$(SRC:.c=.o)
 
-all: $(NAME)
+all: $(LIB) $(NAME)
 
 $(LIB):
-	$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -C $(LIBDIR)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIB)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIB)
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIB)
 
 clean:
-	rm -f $(OBJ)
-	$(MAKE) -C $(LIBDIR) clean
+	@rm -f $(OBJ)
+	@$(MAKE) -C $(LIBDIR) clean
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBDIR) fclean
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBDIR) fclean
 
 re: fclean
-	$(MAKE) $(NAME)
-	$(MAKE) -C $(LIBDIR) re
+	@$(MAKE)
 
 .PHONY: all clean fclean re

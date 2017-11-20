@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 13:59:59 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 22:07:44 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 11:00:20 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,40 @@
 #include "libft.h"
 #include "fillit.h"
 
-void	print_link(t_tetro *elem)
+void	tetroletter(t_tetro *alst)
 {
-	int		i;
-	t_pos	**tmp;
+	t_tetro *curr;
+	char	letter;
 
-	if (!elem)
+	letter = 'A';
+	if (!alst)
 		return ;
-	tmp = elem->postab;
-	ft_putstr("Piece ");
-	ft_putchar(elem->letter);
-	ft_putchar('\n');
-	i = 0;
-	while(tmp[i])
+	curr = alst;
+	while (curr)
 	{
-		ft_putnbr(tmp[i]->x);
-		ft_putstr(", ");
-		ft_putnbr(tmp[i]->y);
-		ft_putchar('\n');
-		i++;
+		curr->letter = letter++;
+		curr = curr->next;
 	}
-	ft_putchar('\n');
 }
 
-void	print_list(t_tetro *elem)
+void	tetrorev(t_tetro **alst)
 {
-	if (!elem)
+	t_tetro *prev;
+	t_tetro *curr;
+	t_tetro *tmp;
+
+	if (!alst || !*alst)
 		return ;
-	while (elem)
+	curr = *alst;
+	prev = NULL;
+	while (curr)
 	{
-		print_link(elem);
-		elem = elem->next;
+		tmp = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = tmp;
 	}
+	*alst = prev;
 }
 
 int		tetronb(t_tetro *alst)
@@ -65,8 +67,8 @@ int		tetronb(t_tetro *alst)
 
 void	tetrodel(t_tetro **alst)
 {
-	int i;
-	t_tetro *tmp;
+	int		i;
+	t_tetro	*tmp;
 
 	if (!alst)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 14:57:40 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 23:56:29 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:47:47 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,56 +26,47 @@ static int	optimal(int nb)
 	return (i);
 }
 
-static char	**solver(t_tetro *lst, char **map, int max)
+char		**solver(t_tetro *lst, char **map, int max)
 {
-	t_tetro	*curr;
+	int		i;
+	int		j;
 	char	**newmap;
+	t_pos	curr;
 
 	if (!lst)
-		return(map);
-	curr = lst;
-	while (curr)
+		return (map);
+	i = 0;
+	newmap = NULL;
+	while (map[i] && i < max)
 	{
-		newmap = copy_map(map);
-		if (setmap(curr, newmap, max))
+		j = 0;
+		while (map[i][j] && j < max)
 		{
-			newmap = solver(lst->next, newmap, max);
-			if (newmap)
+			curr.x = i;
+			curr.y = j;
+			if (map[i][j] == '.' && canplace(lst->postab, curr, map, max)
+				&& (newmap = place(lst, curr, map, max)) != NULL)
 				return (newmap);
+			j++;
 		}
-		free_map(newmap);
-		curr = curr->next;
+		i++;
 	}
+	free_map(newmap);
 	return (NULL);
 }
 
 char		**solver_init(t_tetro *lst)
 {
+	int		i;
 	char	**map;
 	char	**res;
-	int		i;
 
-	map = (char **)malloc(sizeof(char *) * (MAP_SIZE + 1));
-	if (!map)
-		return (NULL);
-	i = 0;
-	while (i < MAP_SIZE)
-	{
-		map[i] = (char *)malloc(sizeof(char) * (MAP_SIZE + 1));
-		if (!map)
-		{
-			free_map(map);
-			return (NULL);
-		}
-		ft_memset(map[i], '.', MAP_SIZE - 1);
-		map[i++][MAP_SIZE] = '\0';
-	}
-	/*map[i] = NULL;
+	tetrorev(&lst);
+	tetroletter(lst);
+	map = init_map();
 	i = optimal(tetronb(lst));
 	while (!(res = solver(lst, map, i)))
-		i++;*/
-	res = solver(lst, map, 4);
+		i++;
 	free_map(map);
-	print_map(res);
 	return (res);
 }

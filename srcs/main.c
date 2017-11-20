@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:34:19 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 22:16:10 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:47:21 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,5 @@ int				main(int argc, char **argv)
 		return (-1);
 	}
 	map = solver_init(list_input);
-	/*print_map(map);
-	print_list(list_input);
-	free_map(map);*/
-	return (1);
+	print_map(map);
 }

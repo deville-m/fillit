@@ -3,103 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbaraud <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/08 12:03:19 by rbaraud           #+#    #+#             */
-/*   Updated: 2017/11/12 21:05:32 by rbaraud          ###   ########.fr       */
+/*   Created: 2017/08/23 20:59:38 by mdeville          #+#    #+#             */
+/*   Updated: 2017/11/06 20:22:43 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <string.h>
-#include "libft.h"
 
-static int		w_size(char const *s, char c, int type)
+static char		*ft_copy(char const *s, char c)
 {
 	size_t	i;
-	size_t	size;
+	char	*res;
 
 	i = 0;
-	size = 0;
-	while (s[i])
-	{
-		if (s[i] != c)
-			size = size + 1;
-		while (s[i] != c && s[i])
-			i = i + 1;
-		if (type == 2)
-			return (i);
-		while (s[i] == c && s[i])
-			i = i + 1;
-	}
-	if (type == 1)
-		return (size);
-	return (0);
-}
-
-static char		**make_empty_tab(void)
-{
-	char	**empty;
-
-	empty = (char **)malloc(sizeof(char *));
-	if (!empty)
+	while (s[i] && s[i] != c)
+		i++;
+	res = (char *)malloc(sizeof(char) * (i + 1));
+	if (!res)
 		return (NULL);
-	empty[0] = NULL;
-	return (empty);
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+		res[i] = s[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }
 
-static char		**clear_tab(char **tab, size_t length)
+static size_t	nb_words(char const *s, char c)
 {
+	size_t	cpt;
 	size_t	i;
 
-	if (!tab || !*tab)
-		return (NULL);
-	i = 1;
-	while (i < length)
-	{
-		ft_memdel((void **)&tab[i]);
-		i = i + 1;
-	}
-	tab[0] = NULL;
-	return (tab);
-}
-
-static char		**fill_the_tab(char **tab, char const *s, char c)
-{
-	size_t	i;
-	size_t	j;
-	size_t	gen;
-
-	gen = -1;
+	cpt = 0;
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] == c && s[i])
-			i = i + 1;
-		if (s[i] != c && s[i])
-		{
-			gen = gen + 1;
-			if (!(tab[gen] = ft_strnew(w_size(&s[i], c, 2))))
-				return (clear_tab(tab, gen));
-		}
-		j = 0;
-		while (s[i] != c && s[i])
-		{
-			tab[gen][j] = s[i++];
-			j = j + 1;
-		}
+		if ((i == 0 && s[i] != c) || (s[i] != c && s[i - 1] == c))
+			cpt++;
+		i++;
 	}
-	tab[gen + 1] = NULL;
-	return (tab);
+	return (cpt);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**tab;
+	char	**res;
+	size_t	word;
+	size_t	i;
 
-	if (!s || w_size(s, c, 1) == 0)
-		return (make_empty_tab());
-	if (!(tab = (char **)malloc(sizeof(char *) * (w_size(s, c, 1) + 1))))
+	if (!s)
 		return (NULL);
-	return (fill_the_tab(tab, s, c));
+	res = (char **)malloc(sizeof(char *) * (nb_words(s, c) + 1));
+	if (!res)
+		return (NULL);
+	word = 0;
+	i = 0;
+	while (s[i])
+	{
+		if ((i == 0 && s[i] != c) || (s[i] != c && s[i - 1] == c))
+		{
+			res[word++] = ft_copy(s + i, c);
+		}
+		i++;
+	}
+	res[word] = NULL;
+	return (res);
 }

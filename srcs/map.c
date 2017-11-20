@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:31:36 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 23:50:09 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 12:57:54 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,45 @@ void				free_map(char **src)
 	if (!src)
 		return ;
 	i = 0;
-	while (i < MAP_SIZE)
+	while (src[i])
 		free(src[i++]);
 	free(src);
 }
 
-static inline char	*copy_line(char *src)
+char				**init_map(void)
 {
-	size_t	i;
-	char	*res;
+	int		i;
+	char	**map;
 
-	if (!(res = (char *)malloc(sizeof(char) * (MAP_SIZE + 1))))
+	map = (char **)malloc(sizeof(char *) * (MAP_SIZE + 1));
+	if (!map)
 		return (NULL);
 	i = 0;
-	while (src[i])
+	while (i < MAP_SIZE)
+	{
+		map[i] = (char *)malloc(sizeof(char) * (MAP_SIZE + 1));
+		if (!map)
+		{
+			free_map(map);
+			return (NULL);
+		}
+		ft_memset(map[i], '.', MAP_SIZE);
+		map[i++][MAP_SIZE] = '\0';
+	}
+	map[i] = NULL;
+	return (map);
+}
+
+static inline char	*copy_line(char *src, int max)
+{
+	int		i;
+	char	*res;
+
+	res = (char *)malloc(sizeof(char) * (max + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (src[i] && i < max)
 	{
 		res[i] = src[i];
 		i++;
@@ -42,20 +67,21 @@ static inline char	*copy_line(char *src)
 	res[i] = '\0';
 	return (res);
 }
-char				**copy_map(char **src)
+
+char				**copy_map(char **src, int max)
 {
 	char	**res;
-	size_t	i;
+	int		i;
 
 	if (!src)
 		return (NULL);
-	res = (char **)malloc(sizeof(char *) * (MAP_SIZE + 1));
+	res = (char **)malloc(sizeof(char *) * (max + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (src[i])
+	while (src[i] && i < max)
 	{
-		res[i] = copy_line(src[i]);
+		res[i] = copy_line(src[i], max);
 		if (!res[i])
 		{
 			free_map(res);

@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 17:16:28 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/17 20:12:01 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 13:51:50 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ static void				init_postab(t_pos **tab, char **str)
 				setpos(tab, cpt++, curr, origin);
 			j++;
 		}
-		i++;
 		free(str[i]);
+		i++;
 	}
 	free(str);
 }
 
-t_tetro					*tetronew(char **str, char letter)
+t_tetro					*tetronew(char **str)
 {
 	int		i;
 	t_tetro	*res;
@@ -56,7 +56,7 @@ t_tetro					*tetronew(char **str, char letter)
 	res = (t_tetro *)malloc(sizeof(t_tetro));
 	if (!res)
 		return (NULL);
-	res->letter = letter;
+	res->letter = '\0';
 	i = 0;
 	while (i < 4)
 	{
