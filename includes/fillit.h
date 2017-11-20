@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 19:55:09 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 12:41:45 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:27:50 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct		s_tetro
 }					t_tetro;
 
 char				**solver_init(t_tetro *alst);
-char				**solver(t_tetro *lst, char **map, int max);
-char				**init_map(void);
+int					solver(t_tetro *lst, char **map, int max);
+char				**init_map(int size);
 char				**copy_map(char **map, int max);
 int					num_piece(const char *s);
 int					tetronb(t_tetro *alst);
@@ -45,6 +45,7 @@ void				print_link(t_tetro *elem);
 void				print_list(t_tetro *elem);
 void				print_map(char **map);
 void				free_map(char **map);
-char				**place(t_tetro *elem, t_pos pos, char **map, int max);
+int					place(t_tetro *elem, t_pos pos, char **map, int max);
+void				unplace(t_tetro *elem, t_pos pos, char **map);
 int					canplace(t_pos **tab, t_pos pos, char **map, int max);
 #endif

@@ -6,11 +6,10 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:58:17 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 10:21:57 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 14:18:49 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"

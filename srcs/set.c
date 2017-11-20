@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 16:09:10 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 12:55:40 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:01:14 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		canplace(t_pos **tab, t_pos pos, char **map, int max)
 	int xtmp;
 	int ytmp;
 
+	if (!tab)
+		return (0);
 	i = 0;
 	while (tab[i])
 	{
@@ -32,19 +34,31 @@ int		canplace(t_pos **tab, t_pos pos, char **map, int max)
 	return (1);
 }
 
-char	**place(t_tetro *elem, t_pos pos, char **map, int max)
+int		place(t_tetro *elem, t_pos pos, char **map, int max)
 {
 	int		i;
 	t_pos	**tab;
-	char	**newmap;
 
 	i = 0;
-	newmap = copy_map(map, max);
 	tab = elem->postab;
 	while (tab[i])
 	{
-		newmap[tab[i]->x + pos.x][tab[i]->y + pos.y] = elem->letter;
+		map[tab[i]->x + pos.x][tab[i]->y + pos.y] = elem->letter;
 		i++;
 	}
-	return (solver(elem->next, newmap, max));
+	return (solver(elem->next, map, max));
+}
+
+void	unplace(t_tetro *elem, t_pos pos, char **map)
+{
+	int		i;
+	t_pos	**tab;
+
+	i = 0;
+	tab = elem->postab;
+	while (tab[i])
+	{
+		map[tab[i]->x + pos.x][tab[i]->y + pos.y] = '.';
+		i++;
+	}
 }

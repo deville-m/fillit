@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:31:36 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 12:57:54 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:20:29 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@ void				free_map(char **src)
 	free(src);
 }
 
-char				**init_map(void)
+char				**init_map(int size)
 {
 	int		i;
 	char	**map;
 
-	map = (char **)malloc(sizeof(char *) * (MAP_SIZE + 1));
+	map = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!map)
 		return (NULL);
 	i = 0;
-	while (i < MAP_SIZE)
+	while (i < size)
 	{
-		map[i] = (char *)malloc(sizeof(char) * (MAP_SIZE + 1));
+		map[i] = (char *)malloc(sizeof(char) * (size + 1));
 		if (!map)
 		{
 			free_map(map);
 			return (NULL);
 		}
-		ft_memset(map[i], '.', MAP_SIZE);
-		map[i++][MAP_SIZE] = '\0';
+		ft_memset(map[i], '.', size);
+		map[i++][size] = '\0';
 	}
 	map[i] = NULL;
 	return (map);

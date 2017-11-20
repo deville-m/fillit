@@ -13,13 +13,13 @@ OBJ=$(SRC:.c=.o)
 all: $(LIB) $(NAME)
 
 $(LIB):
-	@$(MAKE) -C $(LIBDIR)
+	$(MAKE) -C $(LIBDIR)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIB)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIB)
 
 clean:
 	@rm -f $(OBJ)

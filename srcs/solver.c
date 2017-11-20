@@ -6,14 +6,13 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 14:57:40 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 13:47:47 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:08:04 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 static int	optimal(int nb)
 {
@@ -26,17 +25,15 @@ static int	optimal(int nb)
 	return (i);
 }
 
-char		**solver(t_tetro *lst, char **map, int max)
+int			solver(t_tetro *lst, char **map, int max)
 {
 	int		i;
 	int		j;
-	char	**newmap;
 	t_pos	curr;
 
 	if (!lst)
-		return (map);
+		return (1);
 	i = 0;
-	newmap = NULL;
 	while (map[i] && i < max)
 	{
 		j = 0;
@@ -44,29 +41,33 @@ char		**solver(t_tetro *lst, char **map, int max)
 		{
 			curr.x = i;
 			curr.y = j;
-			if (map[i][j] == '.' && canplace(lst->postab, curr, map, max)
-				&& (newmap = place(lst, curr, map, max)) != NULL)
-				return (newmap);
-			j++;
+			if (map[i][j++] == '.' && canplace(lst->postab, curr, map, max))
+			{
+				if (place(lst, curr, map, max))
+					return (1);
+				else
+					unplace(lst, curr, map);
+			}
 		}
 		i++;
 	}
-	free_map(newmap);
-	return (NULL);
+	return (0);
 }
 
 char		**solver_init(t_tetro *lst)
 {
 	int		i;
 	char	**map;
-	char	**res;
+	int		res;
 
 	tetrorev(&lst);
 	tetroletter(lst);
-	map = init_map();
 	i = optimal(tetronb(lst));
-	while (!(res = solver(lst, map, i)))
-		i++;
-	free_map(map);
-	return (res);
+	res = 0;
+	while (!res)
+	{
+		map = init_map(i);
+		res = solver(lst, map, i++);
+	}
+	return (map);
 }

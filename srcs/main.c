@@ -6,11 +6,10 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:34:19 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 13:47:21 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:13:01 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,5 +42,7 @@ int				main(int argc, char **argv)
 		return (-1);
 	}
 	map = solver_init(list_input);
+	tetrodel(&list_input);
 	print_map(map);
+	free_map(map);
 }

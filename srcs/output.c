@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 09:54:21 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 11:00:41 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:37:09 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	print_link(t_tetro *elem)
 	t_pos	**tmp;
 
 	if (!elem)
+	{
+		ft_putstr("NULL link\n");
 		return ;
+	}
 	tmp = elem->postab;
 	ft_putstr("Piece ");
 	ft_putchar(elem->letter);
