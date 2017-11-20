@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:58:17 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 16:56:51 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 17:36:42 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,18 @@ t_tetro					*input(int fd)
 	t_tetro			*res;
 	t_tetro			*new;
 	char			buffer[21];
+	int				nbtetros;
 
+	nbtetros = 0;
 	while ((nbread = read(fd, buffer, 21)) == 21)
 	{
 		if (buffer[20] != '\n' || !check_piece(buffer)
 			|| !(new = tetronew(ft_strsplit(buffer, '\n'))))
 			return (free_and_null(&res));
 		tetroadd(&res, new);
+		nbtetros++;
 	}
-	if (nbread == 20 && check_piece(buffer)
+	if (nbread == 20 && check_piece(buffer) && nbtetros + 1 <= 26
 			&& (new = tetronew(ft_strsplit(buffer, '\n'))))
 		tetroadd(&res, new);
 	else
