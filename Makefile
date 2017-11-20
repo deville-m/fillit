@@ -32,4 +32,4 @@ fclean: clean
 re: fclean
 	@$(MAKE)
 
-.PHONY: all clean fclean re $(LIBDIR)/$(LIB)
+.PHONY: all clean fclean re
