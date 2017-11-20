@@ -6,7 +6,7 @@
 /*   By: mdeville <mdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 16:09:10 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 16:01:14 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:56:00 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		canplace(t_pos **tab, t_pos pos, char **map, int max)
 
 	if (!tab)
 		return (0);
-	i = 0;
+	i = 1;
 	while (tab[i])
 	{
 		xtmp = tab[i]->x + pos.x;
@@ -38,12 +38,14 @@ int		place(t_tetro *elem, t_pos pos, char **map, int max)
 {
 	int		i;
 	t_pos	**tab;
+	char	c;
 
 	i = 0;
 	tab = elem->postab;
+	c = elem->letter;
 	while (tab[i])
 	{
-		map[tab[i]->x + pos.x][tab[i]->y + pos.y] = elem->letter;
+		map[tab[i]->x + pos.x][tab[i]->y + pos.y] = c;
 		i++;
 	}
 	return (solver(elem->next, map, max));

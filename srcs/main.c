@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:34:19 by mdeville          #+#    #+#             */
-/*   Updated: 2017/11/20 15:13:01 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/11/20 17:01:05 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int				main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr("Error when openning the file. Did you check the name ?\n");
+		ft_putstr("error\n");
 		return (-1);
 	}
 	list_input = input(fd);
 	if (!list_input || close(fd) == -1)
 	{
-		ft_putstr("File format not respected.\n");
+		ft_putstr("error\n");
 		return (-1);
 	}
 	map = solver_init(list_input);

@@ -1,6 +1,6 @@
 NAME=fillit
 CC=gcc
-CFLAGS=-Wall -Wextra -fsanitize=address
+CFLAGS=-Wall -Wextra -Werror
 LIBDIR=libft
 LIB=libft.a
 LDLIB=-lft
@@ -10,15 +10,15 @@ INCLUDES=-I$(LIBDIR) -Iincludes
 SRC=$(addprefix $(SRCDIR)/, main.c input.c output.c list.c tetronew.c num_piece.c map.c solver.c set.c)
 OBJ=$(SRC:.c=.o)
 
-all: $(LIB) $(NAME)
+all: $(NAME)
 
-$(LIB):
-	$(MAKE) -C $(LIBDIR)
+$(LIBDIR)/$(LIB):
+	@$(MAKE) -C $(LIBDIR) $(LIB)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBDIR)/$(LIB)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIB)
 
 clean:
@@ -32,4 +32,4 @@ fclean: clean
 re: fclean
 	@$(MAKE)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(LIBDIR)/$(LIB)
